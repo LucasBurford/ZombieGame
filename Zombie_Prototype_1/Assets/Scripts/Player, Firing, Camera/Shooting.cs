@@ -10,6 +10,7 @@ public class Shooting : MonoBehaviour
     [Header("References")]
     public CharacterControl control;
     public Bullet bulletPrefab;
+    public GameObject model;
     public GameObject player;
     public GameObject aimDot;
     public LineRenderer lr;
@@ -21,6 +22,8 @@ public class Shooting : MonoBehaviour
     public Sprite smgIcon, assaultRifleIcon, machineGunIcon, shotGunIcon, axeIcon;
     public Color defaultColour;
     public Color targetColour;
+
+    public GameObject sphere;
     #endregion
 
     #region Gameplay
@@ -101,13 +104,14 @@ public class Shooting : MonoBehaviour
     {
         currentAmmo = maxAmmo;
         ammoSlider.maxValue = maxAmmo;
+        aimOrigin = firePoint.position;
         Cursor.visible = true;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        firePoint.localRotation = transform.localRotation;
+        firePoint.localRotation = model.transform.localRotation;
         if (isFiring && isAiming)
         {
             shotCounter -= Time.deltaTime;
@@ -152,12 +156,16 @@ public class Shooting : MonoBehaviour
 
     private void DrawAimLine()
     {
+        aimEnd = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, worldDepth));
+
         if (isAiming)
         {
             lr.positionCount = 2;
 
             aimOrigin = firePoint.position;
-            aimEnd = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, worldDepth));
+
+
+            //sphere.transform.position = aimEnd;
 
             if (DrawAimRay())
             {
@@ -353,9 +361,9 @@ public class Shooting : MonoBehaviour
         Reload();
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawWireSphere(firePoint.position, axeAttackRange);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(aimOrigin, aimEnd);
+    }
 }

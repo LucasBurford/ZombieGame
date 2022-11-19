@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterControl : MonoBehaviour
 {
+    public GameObject model;
     public Shooting shooting;
     public Rigidbody rb;
     private Camera mainCamera;
@@ -117,7 +118,7 @@ public class CharacterControl : MonoBehaviour
 
         if (moveInput.magnitude == 0)
         {
-            rb.angularVelocity = new Vector3(0, 0, 0);
+            //rb.angularVelocity = new Vector3(0, 0, 0);
         }
 
         isSprinting = (Input.GetKey(KeyCode.LeftShift));
@@ -132,7 +133,7 @@ public class CharacterControl : MonoBehaviour
             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
             lookingdirection = pointToLook;
 
-            //transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+            model.transform.LookAt(new Vector3(shooting.aimEnd.x, transform.position.y, shooting.aimEnd.z));
         }
     }
 
