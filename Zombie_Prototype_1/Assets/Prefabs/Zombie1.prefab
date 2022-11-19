@@ -5309,6 +5309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db385cd035ca315478e287687eb754c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 0}
   player: {fileID: 0}
   rb: {fileID: 0}
   ai: {fileID: 0}
@@ -5318,13 +5319,13 @@ MonoBehaviour:
   healthSlider: {fileID: 0}
   currentState: 0
   health: 100
-  moveSpeed: 1
+  moveSpeed: 0.5
   attackDamage: 5
   attackRate: 1.5
   coolDownToAttack: 0
   initialCoolDown: 0
   coolDownRate: 0
-  aggroDistance: 0.1
+  aggroDistance: 5
   stoppingDistance: 1
   attackingDistance: 1
   hitScore: 10
@@ -5333,7 +5334,7 @@ MonoBehaviour:
   destroyTime: 3
   sliderYOffset: 103
   uiRemoveDistance: 4
-  worldYLevel: 0
+  worldYLevel: 100
   canAttack: 1
   isAttacking: 0
   isStopped: 0

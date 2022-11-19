@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour
 {
+    public GameObject model;
     public Player player;
     public Rigidbody rb;
     public NavMeshAgent ai;
@@ -54,6 +55,7 @@ public class Zombie : MonoBehaviour
         ai = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         ps = GetComponent<ParticleSystem>();
+        model = GameObject.Find("The Adventurer Blake");
         player = FindObjectOfType<Player>();
         canvasParent = Instantiate(Resources.Load<Canvas>("WorldCanvas"));
         healthSlider = canvasParent.GetComponentInChildren<Slider>();
@@ -96,12 +98,15 @@ public class Zombie : MonoBehaviour
 
     private void CheckDistance()
     {
+        print(Vector3.Distance(transform.position, model.transform.position));
+
         // If zombie is close enough to player to start moving towards them
-        if (Vector3.Distance(transform.position, player.transform.position) < aggroDistance)
+        if (Vector3.Distance(transform.position, model.transform.position) < aggroDistance)
         {
             isStopped = false;
             currentState = States.Chasing;
-            ai.SetDestination(new Vector3(player.transform.position.x, worldYLevel, player.transform.position.z));
+            ai.speed = moveSpeed;
+            ai.SetDestination(new Vector3(model.transform.position.x, worldYLevel, model.transform.position.z));
             animator.SetFloat("MoveSpeed", moveSpeed);
         }
         // Else if they are too far away
@@ -116,7 +121,7 @@ public class Zombie : MonoBehaviour
         }
 
         // If zombie is close enough to attack player
-        if (Vector3.Distance(transform.position, player.transform.position) <= attackingDistance)
+        if (Vector3.Distance(transform.position, model.transform.position) <= attackingDistance)
         {
             animator.SetFloat("MoveSpeed", 0);
             countDownShouldDecrease = true;

@@ -11,8 +11,6 @@ public class BackgroundMusicManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        source = GetComponent<AudioSource>();
-
         source.playOnAwake = false;
         GetNewClip();
     }

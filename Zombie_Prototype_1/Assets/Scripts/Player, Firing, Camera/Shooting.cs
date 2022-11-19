@@ -156,16 +156,12 @@ public class Shooting : MonoBehaviour
 
     private void DrawAimLine()
     {
+        aimOrigin = firePoint.position;
         aimEnd = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, worldDepth));
 
         if (isAiming)
         {
             lr.positionCount = 2;
-
-            aimOrigin = firePoint.position;
-
-
-            //sphere.transform.position = aimEnd;
 
             if (DrawAimRay())
             {
@@ -193,23 +189,13 @@ public class Shooting : MonoBehaviour
         else
         {
             lr.positionCount = 0;
+            aimDot.gameObject.SetActive(false);
         }
     }
 
     private bool DrawAimRay()
     {
-        bool lookingAtEnemy = false;
-
-        if (Physics.Linecast(aimOrigin, aimEnd, out aimLineHit, zombieLayer))
-        {
-            lookingAtEnemy = true;
-        }
-        else
-        {
-            lookingAtEnemy = false;
-        }
-
-        return lookingAtEnemy;
+        return Physics.Linecast(aimOrigin, aimEnd, out aimLineHit, zombieLayer);
     }
 
     private void Reload()
